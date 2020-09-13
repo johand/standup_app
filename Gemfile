@@ -63,6 +63,7 @@ group :development do
   gem 'foreman'
   gem 'letter_opener'
   gem 'rubocop', require: false
+  gem 'solargraph'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
