@@ -2,8 +2,11 @@
 
 FactoryBot.define do
   factory :user do
+    association :account, factory: :account, strategy: :build
+
     name { 'MyString' }
-    email { 'email.test@mail.com' }
+    email { Faker::Internet.email }
     password { '123ewq' }
+    password_confirmation { '123ewq' }
   end
 end

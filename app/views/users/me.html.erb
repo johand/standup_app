@@ -27,7 +27,7 @@
                     <%= "#{pluralize(@user.errors.count, 'error')}" %>
                   </h4>
 
-                  <%= @user.error.full_messages.map{|msg| content_tag(:li, msg)}.join %>
+                  <%= @user.errors.full_messages.map{|msg| content_tag(:li, msg)}.join %>
                 </div>
               <% end %>
 
