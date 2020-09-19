@@ -1,0 +1,40 @@
+<div class="login-box">
+  <div class="login-logo">
+    <a href="/">
+      <b>Standup App</b>
+    </a>
+  </div>
+
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">
+        <%= t "devise.invitations.edit.header" %>
+      </p>
+
+      <%= form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :put }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+        <%= f.hidden_field :invitation_token, readonly: true %>
+
+        <% if f.object.class.require_password_on_accepting %>
+          <div class="form-group has-feedback">
+            <%= f.password_field :password, class: 'form-group', placeholder: 'Type Password' %>
+          </div>
+
+          <div class="form-group has-feedback">
+            <%= f.password_field :password_confirmation, class: 'form-group',
+             placeholder: 'Retype Password' %>
+          </div>
+        <% end %>
+
+        <div class="row">
+          <div class="col">
+            <%= f.submit t("devise.invitations.edit.submit_button"),
+             class: 'btn btn-primary btn-block btn-flat' %>
+          </div>
+        </div>
+      <% end %>
+
+      <%= render 'devise/shared/links' %>
+    </div>
+  </div>
+</div>
