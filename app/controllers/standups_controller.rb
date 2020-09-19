@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class StandupsController < ApplicationController
-  before_action :set_standup, only: [:show, :edit, :update, :destroy]
+  before_action :set_standup, only: %i[show edit update destroy]
 
   # GET /standups
   # GET /standups.json
@@ -9,8 +11,7 @@ class StandupsController < ApplicationController
 
   # GET /standups/1
   # GET /standups/1.json
-  def show
-  end
+  def show; end
 
   # GET /standups/new
   def new
@@ -18,8 +19,7 @@ class StandupsController < ApplicationController
   end
 
   # GET /standups/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /standups
   # POST /standups.json
@@ -62,13 +62,14 @@ class StandupsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_standup
-      @standup = Standup.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def standup_params
-      params.require(:standup).permit(:user_id, :standup_date)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_standup
+    @standup = Standup.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def standup_params
+    params.require(:standup).permit(:user_id, :standup_date)
+  end
 end
