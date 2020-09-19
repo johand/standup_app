@@ -8,7 +8,7 @@ RSpec.describe 'New User', type: :system do
   it 'should be able to visit the user index and see at least one user' do
     visit account_users_path
 
-    expect(page).to have_current_path(account_users_path)
+    expect(current_path).to eql(account_users_path)
     expect(page).to have_content(@admin.name.to_s)
   end
 
@@ -18,7 +18,7 @@ RSpec.describe 'New User', type: :system do
     it 'should redirect with only user access' do
       visit account_users_path
 
-      expect(page).to have_current_path(root_path)
+      expect(current_path).to eql(root_path)
     end
   end
 
@@ -26,7 +26,7 @@ RSpec.describe 'New User', type: :system do
     it 'should click new and go to new page' do
       visit account_users_path
       click_on('Add User')
-      expect(page).to have_current_path(new_account_user_path)
+      expect(current_path).to eql(new_account_user_path)
     end
 
     context 'and on the new page' do
@@ -41,7 +41,7 @@ RSpec.describe 'New User', type: :system do
         end
 
         click_button('Add User')
-        expect(page).to have_current_path(account_users_path)
+        expect(current_path).to eql(account_users_path)
       end
 
       it 'and fail to new the user successfully' do
@@ -54,7 +54,7 @@ RSpec.describe 'New User', type: :system do
           select('User', from: 'user_role')
 
           click_button('Add User')
-          expect(page).to have_current_path(account_users_path)
+          expect(current_path).to eql(account_users_path)
         end
       end
     end

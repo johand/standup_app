@@ -11,6 +11,12 @@ class ApplicationController < ActionController::Base
     @current_account
   end
 
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, error: exception.message
+  end
+
+  add_flash_types :error
+
   protected
 
   def layout_by_resource
