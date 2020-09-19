@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @standup.user_id %>
+</p>
+
+<p>
+  <strong>Standup date:</strong>
+  <%= @standup.standup_date %>
+</p>
+
+<%= link_to 'Edit', edit_standup_path(@standup) %> |
+<%= link_to 'Back', standups_path %>
