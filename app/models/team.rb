@@ -8,6 +8,6 @@ class Team < ApplicationRecord
   accepts_nested_attributes_for :days
 
   validates :account, presence: true
-  validates :timezone, precense: true
+  validates :timezone, presence: true
   validates :name, presence: true
 end

@@ -3,8 +3,8 @@
 FactoryBot.define do
   factory :team do
     name { 'MyString' }
-    account { nil }
-    timezone { 'MyString' }
+    account
+    timezone { 'Arizona' }
     has_reminder { false }
     has_recap { false }
     reminder_time { '2020-09-20 20:05:33' }

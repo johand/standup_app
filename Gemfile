@@ -52,6 +52,7 @@ group :development, :test do
   gem 'faker'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
+  gem 'shoulda-matchers'
   gem 'simplecov', require: false, group: :test
   gem 'webdrivers', '~> 4.0'
 end
