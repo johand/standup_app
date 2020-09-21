@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_19_223317) do
+ActiveRecord::Schema.define(version: 2020_09_21_000533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -46,6 +46,21 @@ ActiveRecord::Schema.define(version: 2020_09_19_223317) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_standups_on_user_id"
+  end
+
+  create_table "teams", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.uuid "account_id", null: false
+    t.string "timezone"
+    t.boolean "has_reminder"
+    t.boolean "has_recap"
+    t.time "reminder_time"
+    t.time "recap_time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_teams_on_account_id"
+    t.index ["has_recap", "recap_time"], name: "index_teams_on_has_recap_and_recap_time"
+    t.index ["has_reminder", "reminder_time"], name: "index_teams_on_has_reminder_and_reminder_time"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -85,5 +100,6 @@ ActiveRecord::Schema.define(version: 2020_09_19_223317) do
   end
 
   add_foreign_key "standups", "users"
+  add_foreign_key "teams", "accounts"
   add_foreign_key "users", "accounts"
 end
