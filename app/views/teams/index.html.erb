@@ -1,0 +1,30 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Teams</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="content">
+  <div class="container-fluid">
+    <% @teams.to_a.push(Team.new).each_slice(3) do |teams| %>
+      <div class="row" style="position: relative;">
+        <% teams.each do |team| %>
+          <% unless team.id.nil? %>
+            <%= render partial: team, locals: { team: team } %>
+          <% else %>
+            <% style = @teams.empty? ? "position: absolute; top: 125px" : "position: absolute; bottom: -45px"%>
+            <%= link_to new_team_path, { style: style, id: 'new_team' } do %>
+              <button class="btn btn-primary btn-circle btn-lg">
+                <i class="fa fa-plus"></i>
+              </button>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>

@@ -23,6 +23,17 @@ class ApplicationController < ActionController::Base
 
   add_flash_types :error
 
+  def visible_teams
+    @visible_teams ||=
+      if current_user.has_role? :admin, current_account
+        current_account.teams.includes(:users)
+      else
+        current_user.teams.includes(:users)
+      end
+
+    @visible_teams
+  end
+
   protected
 
   def layout_by_resource

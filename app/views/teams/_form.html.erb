@@ -1,0 +1,139 @@
+<%= javascript_pack_tag 'teams', 'data-turbolinks-track': 'reload' %>
+
+<%= form_with model: @team, id: 'team-form', html: { class: 'form-horizontal' }  do |f| %>
+  <% if @team.errors.any? %>
+    <%= render partial: 'shared/model_errors', locals: { model: @team } %>
+  <% end %>
+
+  <div class="col-lg-11 offset-lg-1">
+    <h3>General Settings</h3>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :name, class: 'control-label col-lg-2' %>
+
+    <div class="col-lg-10">
+      <%= f.text_field :name, placeholder: 'Enter a team name', class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :description, class: 'control-label col-lg-2' %>
+
+    <div class="col-lg-10">
+      <%= f.text_area :description, placeholder: 'Enter a team description', class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :timezone, class: 'control-label col-lg-2' %>
+
+    <div class="col-lg-10">
+      <%= f.time_zone_select(:timezone, ActiveSupport::TimeZone.us_zones, {}, { class: 'form-control' }) %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label '', 'Days of the week', class: 'control-label col-lg-2' %>
+
+    <div class="col-lg-10">
+      <div class="fieldset">
+        <% DaysOfTheWeekMembership.days.each do |day_name, i| %>
+          <div class="abc-checkbox form-check-inline abc-checkbox-primary">
+            <%= check_box_tag "team[days][]", day_name, f.object.days.pluck(:day).include?(day_name),
+             { id: "team_days_#{day_name.downcase }"} %>
+
+            <%= f.label "days_#{day_name.downcase}", day_name.capitalize, { style: "padding-left: 0px" } %>
+          </div>
+        <% end %>
+      </div>
+
+      <span class="help-block m-b-none">The days of the week to hold status reports.</span>
+    </div>
+  </div>
+
+  <div class="hr-line-dashes"></div>
+
+  <h3>Users in this team</h3>
+
+  <div class="fieldset">
+    <% @account_users.each do |user| %>
+      <div class="abc-checkbox form-check-inline abc-checkbox-primary">
+
+        <%= check_box_tag "team[user_ids][]", user.id, f.object.users.pluck(:id).include?(user.id),
+         { id: "team_user_#{user.id}"}%>
+        <%= f.label "user_#{user.id}", user.name, { syle: "padding-left: 0px;" } %>
+      </div>
+    <% end %>
+  </div>
+
+  <span class="help-block m-b-none">Users to be included in this team.</span>
+
+  <div class="hr-line-dashed"></div>
+
+  <h3>Notifications Settings</h3>
+
+  <div class="form-group row">
+    <%= label_tag '', 'Send Reminder Notification?', class: 'form-label col-lg-2' %>
+
+    <div class="col-lg-10">
+      <div class="form-check abc-checkbox abc-checkbox-primary">
+        <%= f.check_box :has_reminder %>
+        <%= label_tag 'team_has_reminder', "&nbsp".html_safe %>
+      </div>
+    </div>
+
+    <span class="help-block m-b-none">
+      Send a reminder notification on days the team has reports.
+    </span>
+  </div>
+
+  <div id="reminder-timer-box" class="form-group row" style="<%= f.object.has_reminder ? '' : 'display: none;' %>">
+    <%= f.label :reminder_time, class: 'control-label col-lg-2' %>
+
+    <div class="col-lg-10">
+      <%= f.time_select :reminder_time, { ampm: true, minute_step: 15 },
+       { style: 'display: inline; width: 10%;', class: 'form-control' } %>
+
+      <span class="help-block m-b-none">
+        Time of the day to send report reminder in the selected time zone.
+      </span>
+    </div>
+
+    <hr style=" width: 100%;" />
+  </div>
+
+  <div class="form-group row">
+    <%= label_tag '', 'Send team Recap?', class: 'form-label col-lg-2' %>
+    <div class="col-lg-10">
+      <div class="form-check abc-checkbox abc-checkbox-primary">
+        <%= f.check_box :has_recap %>
+        <%= label_tag 'team_has_recap', "&nbsp".html_safe %>
+      </div>
+    </div>
+
+    <span class="help-block m-b-none">Send a recap summary on days the team has reports.</span>
+  </div>
+
+
+  <div id="recap-timer-box" class="form-group row" style="<%= f.object.has_recap ? '' : 'display: none;' %>">
+    <%= f.label :recap_time, class: 'control-label col-lg-2' %>
+
+    <div class="col-lg-10">
+      <%= f.time_select :recap_time, { ampm: true, minute_step: 15 },
+       { style: 'display: inline; width: 10%;', class: 'form-control' } %>
+
+      <span class="help-block m-b-none">
+        Time of the day to send report recap in the selected time zone.
+      </span>
+    </div>
+
+    <hr style=" width: 100%;" />
+  </div>
+
+  <div class="form-group">
+    <div class="float-right">
+      <%= f.submit 'Save', class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>

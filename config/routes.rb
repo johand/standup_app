@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'registrations' }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resource :accounts
+  resources :teams, path: 't'
 
   get 'user/me', to: 'users#me', as: 'my_settings'
   patch 'user/update_me', to: 'users#update_me', as: 'update_my_settings'
