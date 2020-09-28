@@ -21,7 +21,7 @@
 @import 'bootstrap-datepicker/dist/css/bootstrap-datepicker';
 
 $font-family-icon: 'Font Awesome 5 Pro';
-$fa-var-check: "\f00c";
+$fa-var-check: '\f00c';
 @import 'awesome-bootstrap-checkbox/awesome-bootstrap-checkbox';
 
 .cursor {
@@ -77,4 +77,20 @@ $fa-var-check: "\f00c";
 .main-footer.full-footer {
   width: 100%;
   margin-left: 0;
+}
+
+.main-header .nav-link {
+  font-size: 16px;
+  color: #efefef;
+}
+
+.main-header .nav-link.standup {
+  background-color: #545454;
+  color: #efefef;
+  width: 155px;
+  border-radius: 40px;
+}
+
+.main-header .nav-link.standup:hover {
+  color: #dee2e6;
 }

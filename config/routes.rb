@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :standups
+  get 's/new/(:date)', to: 'standups#new', as: 'new_standup'
+  get 's/edit/(:date)', to: 'standups#edit', as: 'edit_standup'
+  resources :standups, path: 's', except: %i[new edit]
+
   devise_for :users, controllers: { registrations: 'registrations' }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resource :accounts
