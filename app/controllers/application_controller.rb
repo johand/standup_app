@@ -34,6 +34,16 @@ class ApplicationController < ActionController::Base
     @visible_teams
   end
 
+  def set_teams_and_standups(date)
+    @team = Team.includes(:users).find(params[:id])
+
+    @standups = @team.users.flat_map do |u|
+      u.standups.where(standup_date: date)
+       .includes(:dids, :todos, :blockers)
+       .references(:tasks)
+    end
+  end
+
   protected
 
   def layout_by_resource

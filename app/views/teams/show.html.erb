@@ -10,8 +10,6 @@
 
 <section class="content">
   <div class="container-fluid">
-    <%= render partial: 'layouts/date_change' %>
-
     <div class="row">
       <div class="col">
         <div class="card">
@@ -58,5 +56,21 @@
         </div>
       </div>
     </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <div class="float-right">
+              <%= link_to 'See more', team_standups_path(@team) %>
+            </div>
+
+            <h3 class="card-title"><%= "Today's \"#{@team.name}\" Standups" %></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%= render partial: 'shared/standups', locals: { standups: @standups } %>
   </div>
 </section>

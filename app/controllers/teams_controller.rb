@@ -9,7 +9,7 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @team = Team.includes(:users).find(params[:id])
+    set_teams_and_standups(Date.today.iso8601)
   end
 
   def new
@@ -61,7 +61,7 @@ class TeamsController < ApplicationController
 
   def team_params
     params.require(:team).permit(:name, :description, :timezone, :has_reminder,
-                                 :has_recap, :reminder_time, :recap_time, days: [], users_id: [])
+                                 :has_recap, :reminder_time, :recap_time, days: [], user_ids: [])
   end
 
   def set_users

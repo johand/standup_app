@@ -1,0 +1,27 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Teams > Standups</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="content">
+  <div class="container-fluid">
+    <%= render partial: 'layouts/date_change', locals: { reload_path: "/t/#{@team.id}/s"} %>
+
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"><%= "#{@team.name}'s Standups" %></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%= render partial: 'shared/standups', locals: { standups: @standups } %>
+  </div>
+</section>
