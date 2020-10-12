@@ -15,6 +15,10 @@ RSpec.describe AccountsController, type: :controller do
     sign_in user
   end
 
+  before do
+    allow(Slack::Notifier).to receive_message_chain(:new, :ping) { nil }
+  end
+
   describe 'GET #new' do
     it 'returns http success' do
       get :new
