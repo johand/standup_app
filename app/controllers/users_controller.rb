@@ -25,7 +25,7 @@ class UsersController < ApplicationController
           @user.add_role user_params[:role].to_sym, current_account
           format.html do
             redirect_to account_users_path,
-                        notice: 'User was s uccessfully invited.'
+                        notice: 'User was successfully invited.'
           end
         else
           set_choices

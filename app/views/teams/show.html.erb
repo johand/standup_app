@@ -1,0 +1,76 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark"></h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <div class="float-right">
+              <% if current_user.has_role? :admin, current_account %>
+                <%= link_to edit_team_path(@team), { class: 'btn btn-xs btn-white btn-tool',
+                  data: { toogle: 'tooltip', placement: 'top', title: 'Edit' }, style: 'margin-left: 10px;' } do %>
+                  <i class="fas fa-pencil-alt"></i>
+                <% end %>
+
+                <%= link_to team_path(@team), { class: 'btn btn-xs btn-white btn-tool',
+                  method: :delete, data: { confirm: 'Are you sure? Deleting is permanent',
+                    toogle: 'tooltip', placement: 'top', title: 'Delete'}, style: 'margin-left: 10px;'} do %>
+                  <i class="fa fa-trash"></i>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <h3 id="team-settings"><%= @team.name %> Team Settings</h3>
+
+            <p>
+              <span>Users:</span>
+
+              <%= @team.users.map(&:name).join(', ') %>
+
+              <% if @team.has_reminder %>
+                <span>| Reminder at: </span>
+
+                <%= "#{@team.reminder_time.in_time_zone(current_user.time_zone).strftime('%I:%M %p %Z')}
+                    (#{@team.reminder_time.in_time_zone(current_user.time_zone).strftime('%H:%M')})" %>
+              <% end %>
+
+              <% if @team.has_recap %>
+                <span>| Recap at:</span>
+
+                <%= "#{@team.recap_time.in_time_zone(current_user.time_zone).strftime('%I:%M %p %Z')}
+                    (#{@team.recap_time.in_time_zone(current_user.time_zone).strftime('%H:%M')})" %>
+              <% end %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <div class="float-right">
+              <%= link_to 'See more', team_standups_path(@team) %>
+            </div>
+
+            <h3 class="card-title"><%= "Today's \"#{@team.name}\" Standups" %></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%= render partial: 'shared/standups', locals: { standups: @standups } %>
+  </div>
+</section>

@@ -75,6 +75,7 @@ GEM
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
     childprocess (3.0.0)
+    cocoon (1.2.15)
     coderay (1.1.3)
     concurrent-ruby (1.1.7)
     connection_pool (2.2.3)
@@ -253,6 +254,8 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    shoulda-matchers (4.4.1)
+      activesupport (>= 4.2.0)
     sidekiq (6.1.1)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
@@ -317,6 +320,7 @@ DEPENDENCIES
   byebug
   cancancan
   capybara
+  cocoon
   devise
   devise_invitable
   factory_bot_rails
@@ -341,6 +345,7 @@ DEPENDENCIES
   rspec-rails
   rubocop
   sass-rails (>= 6)
+  shoulda-matchers
   sidekiq
   simplecov
   sinatra

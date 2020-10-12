@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-lg-1 offset-lg-2 col-md-2 offset-md-1 col-sm-2 offset-sm-1">
+    <%= link_to update_date_path(date: Date.parse(current_date) - 1.day,
+                                 reload_path: "#{reload_path}/#{Date.parse(current_date) - 1.day}"), id: 'date_backwards' do %>
+
+      <div class="card">
+        <div class="card-body text-center">
+          <i class="fa fa-arrow-left fa-2x"></i>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="col-lg-6 col-md-5 col-sm-5">
+    <div id="datePicker" class="card cursor">
+      <div class="card-body text-center">
+        <input id="datePickerInput" name="current_date" type="text"
+               value="current_date" style="visibility: hidden; width: 5px"
+               data-reload-path="<%= reload_path %>" />
+
+        <i class="fa fa-calendar fa-2x"></i>
+
+        <h3 style="margin-left: 10px; display: inline; font-weight: 100;">
+          <%= Date.parse(current_date).strftime("%a, %b #{Date.parse(current_date).day.ordinalize}") %>
+        </h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-1 col-lg-offset-2 col-md-2 col-md-offset-1 col-sm-2 col-sm-offset-1">
+    <%= link_to update_date_path(date: Date.parse(current_date) + 1.day,
+                                 reload_path: "#{reload_path}/#{Date.parse(current_date) + 1.day}"), id: 'date_forward' do %>
+
+      <div class="card">
+        <div class="card-body text-center">
+          <i class="fa fa-arrow-right fa-2x"></i>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

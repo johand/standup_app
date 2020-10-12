@@ -32,8 +32,9 @@ class Ability
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
     if user.has_role?(:user, user.account || Account.new)
-      can %i[me password update_me update_password], User
+      can %i[me password update_me update_password standups], User
       can %i[feed mine], ActivityController
+      can %i[index show standups], Team
       cannot :manage, Account
     elsif user.has_role?(:admin, user.account || Account.new) # is an admin
       can :manage, :all

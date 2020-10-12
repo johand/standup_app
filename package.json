@@ -2,12 +2,15 @@
   "name": "standup_app",
   "private": true,
   "dependencies": {
+    "@nathanvda/cocoon": "^1.2.14",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.3.0",
     "admin-lte": "^3.0",
+    "awesome-bootstrap-checkbox": "^1.0.1",
     "bootstrap": "^4.5.2",
+    "bootstrap-datepicker": "^1.9.0",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
     "turbolinks": "^5.2.0"

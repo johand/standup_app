@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Standups</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Standup date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @standups.each do |standup| %>
+      <tr>
+        <td><%= standup.user_id %></td>
+        <td><%= standup.standup_date %></td>
+        <td><%= link_to 'Show', standup %></td>
+        <td><%= link_to 'Edit', edit_standup_path(standup) %></td>
+        <td><%= link_to 'Destroy', standup, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Standup', new_standup_path %>

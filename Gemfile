@@ -30,6 +30,7 @@ gem 'redis', '~> 4.0'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'cancancan'
+gem 'cocoon'
 gem 'devise'
 gem 'devise_invitable'
 gem 'figaro'
@@ -52,6 +53,7 @@ group :development, :test do
   gem 'faker'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
+  gem 'shoulda-matchers'
   gem 'simplecov', require: false, group: :test
   gem 'webdrivers', '~> 4.0'
 end

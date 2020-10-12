@@ -1,0 +1,96 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+@import '@fortawesome/fontawesome-free/scss/fontawesome';
+@import 'bootstrap/scss/bootstrap';
+@import 'admin-lte/dist/css/adminlte';
+@import 'bootstrap-datepicker/dist/css/bootstrap-datepicker';
+
+$font-family-icon: 'Font Awesome 5 Pro';
+$fa-var-check: '\f00c';
+@import 'awesome-bootstrap-checkbox/awesome-bootstrap-checkbox';
+
+.cursor {
+  cursor: pointer;
+}
+
+.navbar-custom-menu {
+  padding: 0 16px;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu {
+  border-radius: 3px;
+  padding: 10px 10px 10px 10px;
+  margin-top: 5px;
+  width: 160px;
+}
+
+.main-sidebar h3.header-circ {
+  width: 36px;
+  height: 36px;
+  background-color: #e0e0e0;
+  border-radius: 50%;
+  line-height: 36px;
+  text-align: center;
+  margin: 0;
+}
+
+.main-sidebar .user-panel {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.main-sidebar .user-panel .description {
+  word-wrap: normal;
+  white-space: normal;
+}
+
+.main-sidebar .user-panel .description {
+  margin: 10px 0 10px;
+}
+
+.main-sidebar .fa {
+  color: #707071;
+}
+
+.navbar.no-team {
+  margin-left: 0 !important;
+}
+
+.content-wrapper.no-team {
+  margin-left: 0 !important;
+}
+
+.main-footer.full-footer {
+  width: 100%;
+  margin-left: 0;
+}
+
+.main-header .nav-link {
+  font-size: 16px;
+  color: #efefef;
+}
+
+.main-header .nav-link.standup {
+  background-color: #545454;
+  color: #efefef;
+  width: 155px;
+  border-radius: 40px;
+}
+
+.main-header .nav-link.standup:hover {
+  color: #dee2e6;
+}
