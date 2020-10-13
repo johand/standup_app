@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe "SignUpProcesses", type: :system do
   before do
     driven_by(:rack_test)
+    allow(Slack::Notifier).to receive_message_chain(:new, :ping) { nil }
   end
 
   it 'should require the user to sign up and successfully sign up' do
