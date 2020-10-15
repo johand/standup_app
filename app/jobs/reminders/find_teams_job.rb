@@ -3,7 +3,7 @@
 module Reminders
   class FindTeamsJob < ApplicationJob
     def perform(*_args)
-      team.each { |team| Reminders::EmailUserOnTeamJob.perform_later(team) }
+      teams.each { |team| Reminders::EmailUserOnTeamJob.perform_later(team) }
     end
 
     private

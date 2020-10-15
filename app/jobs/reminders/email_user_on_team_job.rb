@@ -3,7 +3,9 @@
 module Reminders
   class EmailUserOnTeamJob < ApplicationJob
     def perform(team)
-      EmailUserOnTeamJob.reminder_email(user, team).deliver_later
+      team.users.each do |user|
+        EmailReminderMailer.reminder_email(user, team).deliver_later
+      end
     end
   end
 end
