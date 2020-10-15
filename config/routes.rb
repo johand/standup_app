@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'sidekiq/web'
+require 'sidekiq/cron/web'
+
 Rails.application.routes.draw do
   get 's/new/(:date)', to: 'standups#new', as: 'new_standup'
   get 's/edit/(:date)', to: 'standups#edit', as: 'edit_standup'
@@ -32,5 +35,6 @@ Rails.application.routes.draw do
   get 'activity/mine'
   get 'activity/feed'
   get 'dates/:date', to: 'dates#update', as: 'update_date'
+  mount Sidekiq::Web, at: '/sidekiq'
   root to: 'activity#mine'
 end

@@ -37,9 +37,6 @@ class NewRegistrarionService
   end
 
   def notify_slack
-    NotificationServices::SlackWebhooks::NewAccount.new(
-      account: account,
-      user: user
-    )
+    SlackNotificationJob.perform_later(user)
   end
 end

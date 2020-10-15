@@ -1,0 +1,20 @@
+<div class="container">
+  <h1 class="text-center mb-4">
+    Standup App
+  </h1>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <h3 class="text-center mb-4">
+        <%= @team.name %> Reminder!
+      </h3>
+
+      <p class="mb-4">
+        Just wanted to remind you to add your standup for the team <%= @team.name %>
+      </p>
+
+      <%= link_to 'Add Your Standup', new_standup_url(),
+       { class: 'btn btn-primary btn-lg mx-auto mt-2', style: 'width: 95%' } %>
+    </div>
+  </div>
+</div>
