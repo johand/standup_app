@@ -42,6 +42,7 @@ gem 'pry-rails'
 gem 'rack-cors', require: 'rack/cors'
 gem 'rolify'
 gem 'sidekiq'
+gem 'sidekiq-cron'
 gem 'sinatra', require: nil
 gem 'slack-notifier'
 
