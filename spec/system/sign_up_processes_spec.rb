@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+include ActiveJob::TestHelper
+ActiveJob::Base.queue_adapter = :test
 
 RSpec.describe "SignUpProcesses", type: :system do
   before do
@@ -15,7 +17,7 @@ RSpec.describe "SignUpProcesses", type: :system do
 
     within '#new_user' do
       fill_in 'user_name', with: 'Test'
-      fill_in 'user_email', with: 'tets@test.com'
+      fill_in 'user_email', with: 'test@test.com'
       fill_in 'user_password', with: 'password123'
       fill_in 'user_password_confirmation', with: 'password123'
     end
@@ -28,9 +30,11 @@ RSpec.describe "SignUpProcesses", type: :system do
       fill_in 'account_name', with: 'Test CO'
     end
 
-    click_button 'Save'
-
-    expect(current_path).to eql(root_path)
+    expect do
+      click_button 'Save'
+      expect(ActionMailer::Base.deliveries.last.to).to eq['test@test.com']
+      expect(current_path).to eql(root_path)
+    end
   end
 
   it 'should fail on invalid user information' do

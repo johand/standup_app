@@ -1,0 +1,28 @@
+<div class="container">
+  <h1 class="text-center mb-4">
+    Standup App
+  </h1>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <h3 class="text-center mb-4">
+        Welcome <%= @user.name %>!
+      </h3>
+
+      <p class="mb-4">
+        Thank you for signing up to Standup App and we're
+        glad to have you with us! Standup App was created to
+        help user's like yourself have an easy way to track
+        progress with other team members and users.
+      </p>
+
+      <p class="mb-4">
+        The best way to get started is to invite more users
+        to Standup App and set up some teams!
+      </p>
+
+      <%= link_to 'Add Users to Standup App', account_users_url(),
+       { class: 'btn btn-primary btn-lg mx-auto mt-2', style: 'width: 95%' } %>
+    </div>
+  </div>
+</div>
