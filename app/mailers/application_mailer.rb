@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 class ApplicationMailer < ActionMailer::Base
-  default from: ENV['email']
+  default from: "'Standup App' <Standups@standup-app.com>"
   layout 'bootstrap-mailer'
 end

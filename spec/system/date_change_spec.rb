@@ -28,13 +28,13 @@ RSpec.describe 'Date Change', type: :system do
   it 'should be able to visit standups and move date from picker', js: true do
     visit team_standups_path(team)
 
-    # date_milliseconds = (Time.now.utc.beginning_of_day.to_i + 1.day) * 1000
-    date_milliseconds = Time.now.utc.beginning_of_day.to_i * 1000
+    date_milliseconds = (Time.now.utc.beginning_of_day.to_i + 1.day) * 1000
+    # date_milliseconds = Time.now.utc.beginning_of_day.to_i * 1000
 
     find('#datePicker').click
     find("td.day[data-date='#{date_milliseconds}']").click
 
-    expect(page).to have_current_path(team_standups_by_date_path(team, (Date.today + 1.day).iso8601))
+    expect(page).to have_current_path(team_standups_by_date_path(team, (Date.today + 2.day).iso8601))
     expect(page).to have_content(
       Time.at(date_milliseconds / 1000)
         .utc

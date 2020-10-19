@@ -1,0 +1,72 @@
+<div class="container">
+  <h1 class="text-center mb-4">
+    Standup App
+  </h1>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <h3 class="text-center mb-4">
+        <%= @team.name %> Standups Recap!
+      </h3>
+
+      <% if @standups.empty? %>
+        <p class="mb-4">
+          No standups are available to display
+        </p>
+      <% else %>
+        <% @standups.each_slice(3) do |standups| %>
+          <div class="row">
+            <% standups.each do |standup| %>
+              <div class="col-4">
+                <div class="content-block">
+                  <div class="box box-primary">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">
+                        <%= link_to standup.user.name, standups_account_user_url(standup.user) %>
+                      </h3>
+                    </div>
+
+                    <div class="box-body">
+                      <h4>Dids</h4>
+
+                      <ul class="todo-list">
+                        <% standup.dids.each do |did| %>
+                          <li><%= did.title %></li>
+                        <% end %>
+                      </ul>
+
+                      <h4>Todos</h4>
+
+                      <ul class="todo-list">
+                        <% standup.todos.each do |todo| %>
+                          <li><%= todo.title %></li>
+                        <% end %>
+                      </ul>
+
+                      <h4>Blockers</h4>
+
+                      <ul class="todo-list">
+                        <% standup.blockers.each do |blocker| %>
+                          <li><%= blocker.title %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <% if standups.size < 3 %>
+                <% (3 - standups.size).times.each do %>
+                  <div class="col-4"></div>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+
+      <%= link_to 'View Your Standups', activity_mine_url(),
+       { class: 'btn btn-primary btn-lg mx-auto t-2', style: 'width: 95%' } %>
+    </div>
+  </div>
+</div>
