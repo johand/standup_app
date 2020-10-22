@@ -1,0 +1,31 @@
+<div class="card-body">
+  <h4>
+    Dids
+
+    <ul class="todo-list">
+      <% standup.dids.each do |did| %>
+        <li><%= did.title %></li>
+      <% end %>
+    </ul>
+  </h4>
+
+  <h4>
+    Todos
+
+    <ul class="todo-list">
+      <% standup.todos.each do |todo| %>
+        <li><%= todo.title %></li>
+      <% end %>
+    </ul>
+  </h4>
+
+  <h4>
+    Blockers
+
+    <ul class="todo-list">
+      <% standup.blockers.each do |blocker| %>
+        <li><%= blocker.title %></li>
+      <% end %>
+    </ul>
+  </h4>
+</div>

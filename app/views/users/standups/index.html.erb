@@ -42,58 +42,8 @@
       </div>
     </div>
 
-    <% if @standups.empty? %>
-      <div class="row">
-        <div class="col">
-          <p>No standups are available to display</p>
-        </div>
-      </div>
-    <% end %>
-
-    <% @standups.each_slice(3) do |standups| %>
-      <div class="row">
-        <% standups.each do |standup| %>
-          <div class="col-4">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title"><%= standup.standup_date %></h3>
-              </div>
-
-              <div class="card-body">
-                <h4>
-                  Dids
-
-                  <ul class="todo-list">
-                    <% standup.dids.each do |did| %>
-                      <li><%= did.title %></li>
-                    <% end %>
-                  </ul>
-                </h4>
-
-                <h4>
-                  Todos
-
-                  <ul class="todo-list">
-                    <% standup.todos.each do |todo| %>
-                      <li><%= todo.title %></li>
-                    <% end %>
-                  </ul>
-                </h4>
-
-                <h4>
-                  Blockers
-
-                  <ul class="todo-list">
-                    <% standup.blockers.each do |blocker| %>
-                      <li><%= blocker.title %></li>
-                    <% end %>
-                  </ul>
-                </h4>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
+    <div id="user-standups-container">
+      <%= render partial: 'standups', locals: { standups: @standups } %>
+    </div>
   </div>
 </section>
