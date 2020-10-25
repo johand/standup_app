@@ -39,6 +39,7 @@ class StandupsController < ApplicationController
     @standup.user = current_user
 
     if @standup.save
+      invoke_cables
       redirect_back(
         fallback_location: root_path,
         notice: 'Standup was successfully created.'

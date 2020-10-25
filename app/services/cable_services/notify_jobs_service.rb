@@ -10,7 +10,11 @@ module CableServices
     end
 
     def notify(action)
-      Cables::Broadcasts::StandupItemJob.perform_later(standup) if action == :update
+      if action == :update
+        Cables::Broadcasts::StandupItemJob.perform_later(standup)
+      else
+        Cables::Broadcasts::UserStandupItemJob.perform_later(standup)
+      end
     end
   end
 end
