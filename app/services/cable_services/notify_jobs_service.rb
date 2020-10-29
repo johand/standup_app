@@ -15,6 +15,7 @@ module CableServices
       else
         Cables::Broadcasts::UserStandupItemJob.perform_later(standup)
         Cables::Broadcasts::TeamStandupItemJob.perform_later(standup)
+        Cables::Broadcasts::StandupNotificationJob.perform_later(user)
       end
     end
   end

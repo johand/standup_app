@@ -1,0 +1,16 @@
+<span class="dropdown-item dropdown-header">
+  Last <%= notification_standups.size %> notificacions
+</span>
+
+<div class="dropdown-divider"></div>
+<% notification_standups.each do |standup| %>
+  <a class="dropdown-item" href="#" style="font-size: 14px;">
+    <span class="float-right text-muted text-sm"><%= standup.user.name %></span>
+    <i class="fas fa-user mr-2"></i>
+    New Standup!
+    <br/>
+    <div class="text-muted text-sm"><%= standup.standup_date %></div>
+  </a>
+
+  <div class="dropdown-divider"></div>
+<% end %>

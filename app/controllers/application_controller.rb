@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include StandupsHelper
   before_action :authenticate_user!
   layout :layout_by_resource
 
   helper_method :current_account
   helper_method :current_date
+  helper_method :notification_standups
 
   def current_account
     @current_account ||= current_user.account
