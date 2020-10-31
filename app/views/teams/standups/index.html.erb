@@ -22,6 +22,8 @@
       </div>
     </div>
 
-    <%= render partial: 'shared/standups', locals: { standups: @standups } %>
+    <div id="team-standups-container">
+      <%= render partial: 'shared/standups', locals: { standups: @standups } %>
+    </div>
   </div>
 </section>

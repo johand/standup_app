@@ -1,4 +1,4 @@
-<% if @standups.empty? %>
+<% if standups.empty? %>
   <div class="row">
     <div class="col">
       <p>No standups are available to display</p>
@@ -6,7 +6,7 @@
   </div>
 <% end %>
 
-<% @standups.each_slice(3) do |standups| %>
+<% standups.each_slice(3) do |standups| %>
   <div class="row">
     <% standups.each do |standup| %>
       <div class="col-4">

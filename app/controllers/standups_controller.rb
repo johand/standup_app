@@ -39,6 +39,7 @@ class StandupsController < ApplicationController
     @standup.user = current_user
 
     if @standup.save
+      invoke_cables
       redirect_back(
         fallback_location: root_path,
         notice: 'Standup was successfully created.'
@@ -52,6 +53,7 @@ class StandupsController < ApplicationController
   # PATCH/PUT /standups/1.json
   def update
     if @standup.update(standup_params)
+      invoke_cables
       redirect_back(
         fallback_location: root_path,
         notice: 'Standup was successfully updated.'
@@ -97,6 +99,13 @@ class StandupsController < ApplicationController
     elsif standup.nil? && action_name == 'edit'
       redirect_to(new_standup_path(date: current_date)) and return true
     end
+  end
+
+  def invoke_cables
+    CableServices::NotifyJobsService.new(
+      standup: @standup,
+      user: current_user
+    ).notify(action_name.to_sym)
   end
 
   # Only allow a list of trusted parameters through.
