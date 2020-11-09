@@ -8,62 +8,8 @@
   </div>
 </div>
 
-<section class="container">
+<section class="content">
   <div class="container-fluid">
-    <% @standups.each_slice(3) do |standups| %>
-      <div class="row">
-        <% standups.each do |standup| %>
-          <div class="col-4">
-            <div class="card">
-              <div class="card-header">
-                <div class="float-right">
-                  <%= link_to edit_standup_path(date: standup.standup_date) do %>
-                    <button class="btn btn-default btn-sm">
-                      <span style="color: #b30000">
-                        <i class="fas fa-pencil-alt"></i>
-                      </span>
-                    </button>
-                  <% end %>
-                </div>
-
-                <h3 class="card-title"><%= standup.standup_date %></h3>
-              </div>
-
-              <div class="card-body">
-                <h4>
-                  Dids
-
-                  <ul class="todo-list">
-                    <% standup.dids.each do |did| %>
-                      <li><%= did.title %></li>
-                    <% end %>
-                  </ul>
-                </h4>
-
-                <h4>
-                  Todos
-
-                  <ul class="todo-list">
-                    <% standup.todos.each do |todo| %>
-                      <li><%= todo.title %></li>
-                    <% end %>
-                  </ul>
-                </h4>
-
-                <h4>
-                  Blockers
-
-                  <ul class="todo-list">
-                    <% standup.blockers.each do |blocker| %>
-                      <li><%= blocker.title %></li>
-                    <% end %>
-                  </ul>
-                </h4>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
+    <%= react_component('Standups', { standups: Api::StandupsSerializer.new(@standups).as_json }) %>
   </div>
 </section>
