@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useActionCable } from 'use-action-cable';
 
 function Standup(props) {
-  const { standup } = props;
+  const [standup, setStandup] = useState(props.standup);
+  const channelParams = { channel: 'StandupsChannel', standup_id: standup.id };
+  const channelHandlers = {
+    received: data => {
+      console.log(`[ActionCable] [Standup] [${data.id}]`, data);
+      setStandup(data.json);
+    },
+  };
+
+  useActionCable(channelParams, channelHandlers);
 
   return (
     <div className="col-4">

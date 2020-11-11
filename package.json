@@ -20,7 +20,8 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react_ujs": "^2.6.1",
-    "turbolinks": "^5.2.0"
+    "turbolinks": "^5.2.0",
+    "use-action-cable": "^6.0.8"
   },
   "version": "0.1.0",
   "devDependencies": {

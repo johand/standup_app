@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Standup from './Standup';
+import { ActionCableProvider } from 'use-action-cable';
 import { chain, chunk, reverse, sortBy } from 'lodash';
 
 const Standups = ({ standups }) => {
@@ -11,17 +12,19 @@ const Standups = ({ standups }) => {
     .value();
 
   return (
-    <React.Fragment>
-      {standupChunks.map((standups, i) => {
-        return (
-          <div key={i} className="row">
-            {standups.map(standup => {
-              return <Standup key={standup.id} standup={standup} />;
-            })}
-          </div>
-        );
-      })}
-    </React.Fragment>
+    <ActionCableProvider url="/cable">
+      <React.Fragment>
+        {standupChunks.map((standups, i) => {
+          return (
+            <div key={i} className="row">
+              {standups.map(standup => {
+                return <Standup key={standup.id} standup={standup} />;
+              })}
+            </div>
+          );
+        })}
+      </React.Fragment>
+    </ActionCableProvider>
   );
 };
 
