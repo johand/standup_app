@@ -43,7 +43,7 @@
     </div>
 
     <div id="user-standups-container">
-      <%= render partial: 'standups', locals: { standups: @standups } %>
+      <%= react_component('StandupsWrapper', { standups: Api::StandupsSerializer.new(@standups).as_json }) %>
     </div>
   </div>
 </section>

@@ -10,6 +10,6 @@
 
 <section class="content">
   <div class="container-fluid">
-    <%= react_component('Standups', { standups: Api::StandupsSerializer.new(@standups).as_json }) %>
+    <%= react_component('StandupsWrapper', { standups: Api::StandupsSerializer.new(@standups).as_json }) %>
   </div>
 </section>

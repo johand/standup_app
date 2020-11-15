@@ -16,6 +16,10 @@ module Api
       {
         id: standup.id,
         standup_date: standup.standup_date,
+        user: {
+          name: standup.user.name,
+          id: standup.user.id
+        },
         todos: standup.todos.map do |todo|
           {
             id: todo.id,

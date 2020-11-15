@@ -14,6 +14,15 @@ function Standup(props) {
 
   useActionCable(channelParams, channelHandlers);
 
+  const headerDisplay =
+    props.header_display === 'date' ? (
+      standup.standup_date
+    ) : (
+      <a href={'/account/users/' + standup.user.id + '/s'}>
+        {standup.user.name}
+      </a>
+    );
+
   return (
     <div className="col-4">
       <div className="card">
@@ -27,7 +36,7 @@ function Standup(props) {
               </button>
             </a>
           </div>
-          <h3 className="card-title">{standup.standup_date}</h3>
+          <h3 className="card-title">{headerDisplay}</h3>
         </div>
 
         <div className="card-body">
@@ -65,6 +74,7 @@ function Standup(props) {
 
 Standup.propTypes = {
   standup: PropTypes.object,
+  header_display: PropTypes.string,
 };
 
 export default Standup;
