@@ -23,7 +23,7 @@
     </div>
 
     <div id="team-standups-container">
-      <%= render partial: 'shared/standups', locals: { standups: @standups } %>
+      <%= react_component('StandupsWrapper', { header_display: 'user', standups: Api::StandupsSerializer.new(@standups).as_json }) %>
     </div>
   </div>
 </section>
