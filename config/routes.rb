@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get 't/:id/s', to: 'teams/standups#index', as: 'team_standups'
   get 't/:id/s/(:date)', to: 'teams/standups#index', as: 'team_standups_by_date'
   get 't/:id/(:date)', to: 'teams#show'
+  get 't/s/edit/(:date)', to: 'standups#edit', as: 'team_edit_standup'
   resources :teams, path: 't'
 
   get 'user/me', to: 'users#me', as: 'my_settings'
@@ -28,6 +29,7 @@ Rails.application.routes.draw do
     resources :users do
       member do
         get 's', to: 'users/standups#index', as: 'standups'
+        get 's/edit/(:date)', to: 'standups#edit', as: 'edit_standup'
       end
     end
   end
