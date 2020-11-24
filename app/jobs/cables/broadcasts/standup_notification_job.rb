@@ -10,7 +10,8 @@ module Cables
         users.each do |notification_user|
           NotificationsChannel.broadcast_to(
             notification_user,
-            html: render_standup(notification_user)
+            html: render_standup(notification_user),
+            json: Api::StandupsSerializer.new(notification_standups(user)).as_json
           )
         end
       end
