@@ -47,6 +47,7 @@ gem 'sidekiq'
 gem 'sidekiq-cron'
 gem 'sinatra', require: nil
 gem 'slack-notifier'
+gem 'stripe'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
