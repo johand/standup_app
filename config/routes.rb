@@ -32,6 +32,8 @@ Rails.application.routes.draw do
         get 's/edit/(:date)', to: 'standups#edit', as: 'edit_standup'
       end
     end
+
+    resources :plans, only: [:index], controller: 'accounts/plans'
   end
 
   get 'activity/mine'

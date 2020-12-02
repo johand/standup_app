@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_24_013531) do
+ActiveRecord::Schema.define(version: 2020_11_30_224835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -54,6 +54,24 @@ ActiveRecord::Schema.define(version: 2020_09_24_013531) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_standups_on_user_id"
+  end
+
+  create_table "subscriptions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "account_id", null: false
+    t.string "plan_id"
+    t.string "stripe_customer_id"
+    t.datetime "start"
+    t.string "status"
+    t.string "stripe_subscription_id"
+    t.string "stripe_token"
+    t.string "card_last4"
+    t.string "card_expiration"
+    t.string "card_type"
+    t.string "stripe_status"
+    t.string "idempotency_key"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_subscriptions_on_account_id"
   end
 
   create_table "task_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -136,6 +154,7 @@ ActiveRecord::Schema.define(version: 2020_09_24_013531) do
 
   add_foreign_key "days_of_the_week_memberships", "teams"
   add_foreign_key "standups", "users"
+  add_foreign_key "subscriptions", "accounts"
   add_foreign_key "task_memberships", "standups"
   add_foreign_key "task_memberships", "tasks"
   add_foreign_key "team_memberships", "teams"

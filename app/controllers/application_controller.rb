@@ -6,12 +6,18 @@ class ApplicationController < ActionController::Base
   layout :layout_by_resource
 
   helper_method :current_account
+  helper_method :current_subscription
   helper_method :current_date
   helper_method :notification_standups
 
   def current_account
     @current_account ||= current_user.account
     @current_account
+  end
+
+  def current_subscription
+    @current_subscription ||= current_user&.account&.subscription
+    @current_subscription
   end
 
   def current_date

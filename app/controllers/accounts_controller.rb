@@ -10,7 +10,11 @@ class AccountsController < ApplicationController
 
   def create
     @account = Account.new(account_params)
-    result = NewRegistrarionService.new(account: @account, user: current_user).process_registration
+    result = NewRegistrationService.new(
+      account: @account,
+      user: current_user,
+      plan: params[:plan]
+    ).process_registration
 
     if result.success?
       redirect_to root_path, success: 'Your account has been created!'
