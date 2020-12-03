@@ -13,6 +13,8 @@ describe NewRegistrationService do
 
       before do
         allow(Slack::Notifier).to receive_message_chain(:new, :ping) { nil }
+        stripe_mock_customer_success
+        stripe_mock_subscription_success
       end
 
       it 'creates an account' do

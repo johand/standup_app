@@ -10,6 +10,7 @@ require 'rspec/rails'
 require 'devise'
 require 'support/controller_macros'
 require 'support/system_macros'
+require 'support/stripe_mocks'
 include Warden::Test::Helpers
 
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -73,6 +74,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :view
   config.extend ControllerMacros, type: :controller
   config.extend SystemMacros, type: :system
+  config.include StripeMocks
 end
 
 Shoulda::Matchers.configure do |config|

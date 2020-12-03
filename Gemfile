@@ -60,6 +60,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'simplecov', require: false, group: :test
   gem 'webdrivers', '~> 4.0'
+  gem 'webmock'
 end
 
 group :development do

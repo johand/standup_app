@@ -11,7 +11,7 @@ module Payments
         def subscription_attributes
           {
             account_id: account.id,
-            plan_id: plan.id,
+            plan_id: plan,
             stripe_customer_id: customer_id,
             start: subscription.start_date,
             status: subscription.status,

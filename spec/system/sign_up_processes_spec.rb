@@ -15,6 +15,8 @@ RSpec.describe "SignUpProcesses", type: :system do
 
     click_link 'Sign up'
 
+    find("a.btn[href='#{new_user_registration_path(plan: Plan.all.first.stripe_id)}']").click
+
     within '#new_user' do
       fill_in 'user_name', with: 'Test'
       fill_in 'user_email', with: 'test@test.com'
@@ -42,6 +44,8 @@ RSpec.describe "SignUpProcesses", type: :system do
 
     click_on 'Sign up'
 
+    find("a.btn[href='#{new_user_registration_path(plan: Plan.all.first.stripe_id)}']").click
+
     within '#new_user' do
       fill_in 'user_name', with: 'Test'
       fill_in 'user_email', with: 'test'
@@ -58,6 +62,8 @@ RSpec.describe "SignUpProcesses", type: :system do
     visit root_path
 
     click_on 'Sign up'
+
+    find("a.btn[href='#{new_user_registration_path(plan: Plan.all.first.stripe_id)}']").click
 
     within '#new_user' do
       fill_in 'user_name', with: 'Test'

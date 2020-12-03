@@ -46,6 +46,8 @@ RSpec.describe AccountsController, type: :controller do
 
   describe 'POST #create' do
     it 'creates an account' do
+      stripe_mock_customer_success
+      stripe_mock_subscription_success
       post :create, params: { account: FactoryBot.attributes_for(:account) }
       expect(response).to redirect_to root_path
     end
