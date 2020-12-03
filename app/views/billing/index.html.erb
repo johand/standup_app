@@ -1,0 +1,125 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Billing</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-9 offset-sm-1">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title with-border">
+              Plan Information
+            </h3>
+          </div>
+
+          <div class="card-body">
+            <% if current_subscription&.active? %>
+              <p>
+                <div class="float-right">
+                  <%= render partial: 'billing/cancel', locals: { subscription: current_subscription } %>
+                </div>
+
+                <span>Plan: <%= current_subscription.plan_id.capitalize %></span>
+
+                <% if current_subscription.active? %>
+                  <a href="/plans">Change Plan</a>
+                <% end %>
+              </p>
+              <hr/>
+
+              <h4>Usage</h4>
+
+              <p>
+                Users: <%= current_account.users.count %> / <%= Plan.find(current_subscription.plan_id).users %>
+              </p>
+
+              <p>
+                Teams: <%= current_account.teams.count %> / <%= Plan.find(current_subscription.plan_id).teams %>
+              </p>
+            <% else %>
+              <p>
+                There is no active plan on the account. To add one <%= link_to 'click here.', plan_path('free') %>
+              </p>
+            <% end %>
+
+            <% if current_subscription&.card_last4.present? %>
+              <p>
+                <div class="float-right">
+                  <a class="btn btn-sm btn-default" href="<%= charge_cad_billing_index_path %>">
+                    Change Card
+                  </a>
+                </div>
+
+                <i class="fa fa-credit-card"></i>
+
+                <span>
+                  Paymen: <%= current_subscription.card_type %> card ending in <%= current_subscription.card_last4 %> Expiration: <%= current_subscription.card_expiration %>
+                </span>
+              </p>
+              <hr/>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-9 offset-sm-1">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title with-border">
+              Plan Charge History
+            </h3>
+          </div>
+
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>ID</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Description</th>
+                  <th>Payment Method</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% if @charges.blank? %>
+                  <tr>
+                    <td class="text-center" colspan="6">
+                      There are no charges on this account at this time.
+                    </td>
+                  </tr>
+                <% else %>
+                  <% @charges.each do |charge| %>
+                    <tr>
+                      <td><%= charge.status %></td>
+                      <td><%= charge.id[3..-1] %></td>
+                      <td><%= Time.at(charge.created) %></td>
+                      <td><%= Money.new(charge.amount, 'USD').format %></td>
+                      <td><%= charge.statement_descriptor %></td>
+                      <td><%= "#{charge&.source&.brand} #{charge&.source&.last4}" %></td>
+                    </tr>
+                  <% end %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
