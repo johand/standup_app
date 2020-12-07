@@ -8,6 +8,8 @@
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.3.0",
+    "@stripe/react-stripe-js": "^1.1.2",
+    "@stripe/stripe-js": "^1.11.0",
     "admin-lte": "^3.0",
     "awesome-bootstrap-checkbox": "^1.0.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
