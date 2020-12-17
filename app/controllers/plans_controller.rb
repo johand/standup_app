@@ -27,7 +27,7 @@ class PlansController < ApplicationController
 
     handle_response(
       response: response,
-      sucess_message: 'Plan was updated successfully.',
+      success_message: 'Plan was updated successfully.',
       failure_message: 'Plan was unable to be updated!'
     )
   end

@@ -38,4 +38,37 @@ module StripeMocks
                          active: true,
                          product: 'prod_89fehjkwef' }.to_json)
   end
+
+  def stripe_mock_charge_list(charges = [])
+    stub_request(:get, %r{https://api.stripe.com/v1/charges\?customer=\w*})
+      .to_return(body: { object: 'list',
+                         data: charges,
+                         url: '/v1/charges',
+                         has_more: false }.to_json)
+  end
+
+  def stripe_mock_get_customer(customer = '1')
+    stub_request(:get, "https://api.stripe.com/v1/customers/#{customer}")
+      .to_return(body: { id: '1' }.to_json)
+  end
+
+  def stripe_mock_get_subscription(subscription = '1')
+    stub_request(:get, "https://api.stripe.com/v1/subscriptions/#{subscription}")
+      .to_return(body: { id: 'sub_H2vy9P9cSDJWPU', items: { data: [{ id: '1' }] } }.to_json)
+  end
+
+  def stripe_get_token
+    stub_request(:get, %r{https://api.stripe.com/v1/tokens\w*})
+      .to_return(body: { id: 'tok_1GUSzKJqqM7ldLAbiRj4x7nQ',
+                         card: { id: 'card_1q2w3e4r5t',
+                                 brand: 'Visa',
+                                 last4: '4242',
+                                 exp_month: 8,
+                                 exp_year: 2021 } }.to_json)
+  end
+
+  def stripe_mock_subscription_delete
+    stub_request(:delete, %r{https://api.stripe.com/v1/subscriptions\w*})
+      .to_return(body: { id: 'sub_H2vy9P9cSDJWPU', status: 'canceled' }.to_json)
+  end
 end

@@ -16,7 +16,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col">
-        <%= react_component('StripeCard', { url_path: subscription_path,
+        <%= react_component('StripeCard', { url_path: subscriptions_path,
           csrf_token: form_authenticity_token, button_text: 'Add Card and Change Plan' }) %>
       </div>
     </div>

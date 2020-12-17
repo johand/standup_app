@@ -40,7 +40,7 @@ module Payments
         end
 
         def load_customer
-          @customer = ::Stripe::Customer.service(
+          @customer = ::Stripe::Customer.retrieve(
             @account.subscription.stripe_customer_id
           )
 
