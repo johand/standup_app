@@ -3,7 +3,11 @@
 module Reminders
   class FindTeamsJob < ApplicationJob
     def perform(*_args)
-      teams.each { |team| Reminders::EmailUserOnTeamJob.perform_later(team) }
+      teams.each do |team|
+        next unless team.account.subscription&.active?
+
+        Reminders::EmailUserOnTeamJob.perform_later(team)
+      end
     end
 
     private

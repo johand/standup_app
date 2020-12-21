@@ -3,6 +3,7 @@
 class ApplicationController < ActionController::Base
   include StandupsHelper
   before_action :authenticate_user!
+  before_action :subscription_check
   layout :layout_by_resource
 
   helper_method :current_account
@@ -69,6 +70,18 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def subscription_check
+    return if layout_by_resource == 'devise' ||
+              controller_name.in?(%w[plans billing accounts]) ||
+              current_subscription&.active?
+
+    if current_user.has_role? :admin, current_account
+      redirect_to(billing_index_path, notice: 'There is no valid subscription')
+    else
+      sign_out current_user
+    end
+  end
 
   def layout_by_resource
     if devise_controller?

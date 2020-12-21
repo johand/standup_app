@@ -5,12 +5,15 @@ require 'rails_helper'
 RSpec.feature 'BillingCenter', type: :system do
   login_admin
   let(:plan) { Plan.all.first }
-  let!(:subscription) do
-    FactoryBot.create(:subscription,
-                      account_id: @admin.account.id,
-                      stripe_customer_id: '1',
-                      status: 'trialing',
-                      plan_id: plan.stripe_id)
+
+  before do
+    Subscription.destroy_all
+    @admin.reload
+    @subscription = FactoryBot.create(:subscription,
+                                      account_id: @admin.account.id,
+                                      stripe_customer_id: '1',
+                                      status: 'trialing',
+                                      plan_id: plan.stripe_id)
   end
 
   it 'should dislay basic plan information' do
@@ -46,7 +49,7 @@ RSpec.feature 'BillingCenter', type: :system do
   end
 
   it 'should allow a plan to be added' do
-    subscription.destroy
+    @subscription.destroy
     stripe_mock_customer_success
     stripe_mock_subscription_success
     stripe_mock_charge_list
@@ -60,19 +63,22 @@ RSpec.feature 'BillingCenter', type: :system do
   end
 
   context 'with an existing stripe token' do
-    let!(:subscription) do
-      FactoryBot.create(:subscription,
-                        account_id: @admin.account.id,
-                        stripe_customer_id: '1',
-                        status: 'trialing',
-                        plan_id: plan.stripe_id,
-                        stripe_token: 'card_932uojodwjid')
+    before do
+      @subscription.destroy
+      @subscription = FactoryBot.create(:subscription,
+                                        account_id: @admin.account.id,
+                                        stripe_customer_id: '1',
+                                        status: 'trialing',
+                                        plan_id: plan.stripe_id,
+                                        stripe_token: 'card_932uojodwjid')
+
+      @admin.reload
     end
 
     it 'should allow a plan to be changed' do
       stripe_mock_charge_list
       stripe_mock_get_customer
-      stripe_mock_get_subscription(subscription.stripe_subscription_id)
+      stripe_mock_get_subscription(@subscription.stripe_subscription_id)
       stripe_mock_subscription_success
 
       visit billing_index_path
@@ -88,7 +94,7 @@ RSpec.feature 'BillingCenter', type: :system do
   it 'should allow a plan to be changed', js: true do
     stripe_mock_charge_list
     stripe_mock_get_customer
-    stripe_mock_get_subscription(subscription.stripe_subscription_id)
+    stripe_mock_get_subscription(@subscription.stripe_subscription_id)
     stripe_mock_subscription_success
     stripe_mock_customer_success
     stripe_get_token

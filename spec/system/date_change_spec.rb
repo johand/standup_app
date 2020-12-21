@@ -34,7 +34,7 @@ RSpec.describe 'Date Change', type: :system do
     find('#datePicker').click
     find("td.day[data-date='#{date_milliseconds}']").click
 
-    expect(page).to have_current_path(team_standups_by_date_path(team, (Date.today + 1.day).iso8601))
+    expect(page).to have_current_path(team_standups_by_date_path(team, (Date.today + 2.day).iso8601))
     expect(page).to have_content(
       Time.at(date_milliseconds / 1000)
         .utc

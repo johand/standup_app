@@ -10,5 +10,6 @@ FactoryBot.define do
     zip { 'MyString' }
     country { 'MyString' }
     settings { '' }
+    association :subscription, factory: :subscription, strategy: :build
   end
 end
