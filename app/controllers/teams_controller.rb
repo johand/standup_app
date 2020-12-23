@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TeamsController < ApplicationController
+  include Limits
+
   load_and_authorize_resource except: [:create]
   around_action :use_time_zone, only: [:edit]
 
@@ -18,6 +20,13 @@ class TeamsController < ApplicationController
   end
 
   def create
+    check_resource_against_limits(:teams) do
+      return redirect_back(
+        fallback_location: root_path,
+        notice: 'You do not have the resources to create this Team, please consider upgrading your plan.'
+      )
+    end
+
     @team = Team.new(team_params.except('days'))
     @team.account_id = current_account.id
     @team.days = days
