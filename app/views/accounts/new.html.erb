@@ -26,7 +26,9 @@
               <% end %>
 
               <div class="form-group">
+                <%= hidden_field_tag 'plan', params[:plan] %>
                 <%= f.label :name, class: 'control-label col-lg-2' %>
+
                 <div class="col-lg-10">
                   <%= f.text_field :name, placeholder: "Enter your Account's Name " %>
                 </div>

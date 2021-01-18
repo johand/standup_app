@@ -25,6 +25,8 @@ class NewRegistrationService
   attr_reader :user, :account, :plan
 
   def stripe_create
+    return if @plan.nil?
+
     Payments::Stripe::RemoteSignup.new(
       account: account,
       user: user,

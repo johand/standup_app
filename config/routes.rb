@@ -50,5 +50,7 @@ Rails.application.routes.draw do
   get 'activity/feed'
   get 'dates/:date', to: 'dates#update', as: 'update_date'
   mount Sidekiq::Web, at: '/sidekiq'
+  mount StripeEvent::Engine, at: '/billing/events'
+
   root to: 'activity#mine'
 end
