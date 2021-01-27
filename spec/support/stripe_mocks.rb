@@ -71,4 +71,23 @@ module StripeMocks
     stub_request(:delete, %r{https://api.stripe.com/v1/subscriptions\w*})
       .to_return(body: { id: 'sub_H2vy9P9cSDJWPU', status: 'canceled' }.to_json)
   end
+
+  def stripe_mock_webhook(event_name, subscription_id,
+                          data = nil, merge_data = nil)
+    data ||= {
+      id: 'evt_00000000000000',
+      object: 'event',
+      type: event_name,
+      data: { object: { id: subscription_id, object: 'subscription', subscription: subscription_id } }
+    }
+
+    data&.dig(:data, :object)&.merge!(merge_data) if merge_data
+    stub_request(:get, %r{https://api.stripe.com/v1/events\w*})
+      .to_return(
+        body: data.to_json
+      )
+
+    event = double('Stripe::Event', data)
+    event
+  end
 end

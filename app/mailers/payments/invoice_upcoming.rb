@@ -5,7 +5,7 @@ module Payments
     default from: "'Standup App' <billing@app.buildasaasappinrails.com>"
     layout 'payment_mailer'
 
-    def mailer(event)
+    def email(event)
       event = ::Stripe::Event.retrieve(event)
       subscription = obtain_subscription(event)
       user = subscription.account.users.order(created_at: :asc).first
