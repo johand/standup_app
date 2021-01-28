@@ -10,4 +10,5 @@ RSpec.describe Account, type: :model do
   end
 
   it { is_expected.to validate_presence_of(:name) }
+  it { is_expected.to have_one(:subscription) }
 end
