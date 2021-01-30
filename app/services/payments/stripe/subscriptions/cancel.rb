@@ -17,7 +17,7 @@ module Payments
           Result.new(
             success: false,
             subscription: subscription,
-            error: e.mesage
+            error: e.message
           )
         end
 

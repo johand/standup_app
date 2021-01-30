@@ -8,7 +8,7 @@ class SubscriptionsController < ApplicationController
       redirect_to(root_path, notice: 'Plan was successfully added!')
     else
       logger.info "[STRIPE] Problem updating subscription: #{response.error}"
-      redirect_to(plan_path(params[:plan]), notice: 'Plans was not able to be added!')
+      redirect_to(plan_path(params[:plan]), notice: 'Plan was not able to be added!')
     end
   end
 

@@ -125,4 +125,11 @@ end
 
 Capybara.javascript_driver = :selenium_chrome_headless
 Capybara.server = :puma, { Silent: true }
+Capybara.register_driver :selenium_chrome_headless do |app|
+  options = Selenium::WebDriver::Chrome::Options.new(
+    args: %w[headless disable-gpu --window-size=1920x1080]
+  )
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+
 WebMock.disable_net_connect!(allow_localhost: true)

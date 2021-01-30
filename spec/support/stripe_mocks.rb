@@ -1,20 +1,22 @@
 # frozen_string_literal: true
 
 module StripeMocks
-  def stripe_mock_customer_success
-    stub_request(:post, %r{https://api.stripe.com/v1/customers\w*})
-      .to_return(body: { id: '1' }.to_json)
+  def stripe_mock_customer_success(error = nil)
+    stub = stub_request(:post, %r{https://api.stripe.com/v1/customers\w*})
+    stub.to_return(body: error.to_s, status: 402) if error
+    stub.to_return(body: { id: '1' }.to_json)
   end
 
-  def stripe_mock_subscription_success
-    stub_request(:post, %r{https://api.stripe.com/v1/subscriptions\w*})
-      .to_return(
-        body: {
-          id: 'sub_H2vySBdpRqcHoi',
-          start_date: 1_586_160_915,
-          status: 'trialing'
-        }.to_json
-      )
+  def stripe_mock_subscription_success(error = nil)
+    stub = stub_request(:post, %r{https://api.stripe.com/v1/subscriptions\w*})
+    stub.to_return(body: error.to_s, status: 402) if error
+    stub.to_return(
+      body: {
+        id: 'sub_H2vySBdpRqcHoi',
+        start_date: 1_586_160_915,
+        status: 'trialing'
+      }.to_json
+    )
   end
 
   def stripe_mock_plan_list(plans = [])
@@ -67,9 +69,10 @@ module StripeMocks
                                  exp_year: 2021 } }.to_json)
   end
 
-  def stripe_mock_subscription_delete
-    stub_request(:delete, %r{https://api.stripe.com/v1/subscriptions\w*})
-      .to_return(body: { id: 'sub_H2vy9P9cSDJWPU', status: 'canceled' }.to_json)
+  def stripe_mock_subscription_delete(error = nil)
+    stub = stub_request(:delete, %r{https://api.stripe.com/v1/subscriptions\w*})
+    stub.to_return(body: error.to_s, status: 402) if error
+    stub.to_return(body: { id: 'sub_H2vy9P9cSDJWPU', status: 'canceled' }.to_json)
   end
 
   def stripe_mock_webhook(event_name, subscription_id,

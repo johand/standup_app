@@ -97,12 +97,9 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
   end
 
-  config.before(:each, type: :feature) do
+  config.before(:each, type: :system) do
     driver_shares_db_connection_with_specs = Capybara.current_driver == :rack_test
-
-    unless driver_shares_db_connection_with_specs
-      DatabaseCleaner.strategy = :truncation
-    end
+    DatabaseCleaner.strategy = :truncation unless driver_shares_db_connection_with_specs
   end
 
   config.before(:each) do
@@ -119,11 +116,4 @@ Shoulda::Matchers.configure do |config|
     with.test_framework :rspec
     with.library :rails
   end
-end
-
-Capybara.register_driver :selenium_chrome_headless do |app|
-  options = Selenium::WebDriver::Chrome::Options.new(
-    args: %w[headless disable-gpu --window-size=1920x1080]
-  )
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end

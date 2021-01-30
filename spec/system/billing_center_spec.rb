@@ -16,7 +16,7 @@ RSpec.feature 'BillingCenter', type: :system do
                                       plan_id: plan.stripe_id)
   end
 
-  it 'should dislay basic plan information' do
+  it 'should display basic plan information' do
     stripe_mock_charge_list
     visit billing_index_path
 
