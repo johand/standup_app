@@ -3,15 +3,22 @@
 class ApplicationController < ActionController::Base
   include StandupsHelper
   before_action :authenticate_user!
+  before_action :subscription_check
   layout :layout_by_resource
 
   helper_method :current_account
+  helper_method :current_subscription
   helper_method :current_date
   helper_method :notification_standups
 
   def current_account
     @current_account ||= current_user.account
     @current_account
+  end
+
+  def current_subscription
+    @current_subscription ||= current_user&.account&.subscription
+    @current_subscription
   end
 
   def current_date
@@ -46,7 +53,35 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def handle_response(response:,
+                      success_message:,
+                      success_path: billing_index_path,
+                      failure_message:,
+                      failure_path: billing_index_path)
+
+    if response.success?
+      redirect_back(fallback_location: success_path, notice: success_message) &&
+        true
+    else
+      logger.info "[STRIPE] Problem: #{response.error}"
+      redirect_back(fallback_location: failure_path, notice: failure_message) &&
+        true
+    end
+  end
+
   protected
+
+  def subscription_check
+    return if layout_by_resource == 'devise' ||
+              controller_name.in?(%w[plans billing accounts]) ||
+              current_subscription&.active?
+
+    if current_user.has_role? :admin, current_account
+      redirect_to(billing_index_path, notice: 'There is no valid subscription')
+    else
+      sign_out current_user
+    end
+  end
 
   def layout_by_resource
     if devise_controller?

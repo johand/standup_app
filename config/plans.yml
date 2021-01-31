@@ -1,0 +1,30 @@
+free:
+  users: 2
+  teams: 1
+  integrations: false
+  amount: 0
+  interval: 'month'
+  stripe_id: 'free'
+  human_name: 'Free'
+  active: true
+  displayable: true
+starter:
+  users: 10
+  teams: 3
+  integrations: true
+  amount: 1900
+  interval: 'month'
+  stripe_id: 'starter'
+  human_name: 'Starter'
+  active: true
+  displayable: true
+unlimited:
+  users: 9999
+  teams: 9999
+  integrations: true
+  amount: 3900
+  interval: 'month'
+  stripe_id: 'unlimited'
+  human_name: 'Unlimited'
+  active: true
+  displayable: true

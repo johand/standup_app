@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-describe NewRegistrarionService do
-  subject(:registration_service) { NewRegistrarionService }
+describe NewRegistrationService do
+  subject(:registration_service) { NewRegistrationService }
 
   describe 'create an accounts' do
     context 'from form input' do
@@ -13,6 +13,8 @@ describe NewRegistrarionService do
 
       before do
         allow(Slack::Notifier).to receive_message_chain(:new, :ping) { nil }
+        stripe_mock_customer_success
+        stripe_mock_subscription_success
       end
 
       it 'creates an account' do
@@ -41,7 +43,7 @@ describe NewRegistrarionService do
 
       it 'sends a message to be passed to welcome email method' do
         expect_any_instance_of(
-          NewRegistrarionService
+          NewRegistrationService
         ).to receive(:send_welcome_email).once
 
         registration_service
@@ -51,7 +53,7 @@ describe NewRegistrarionService do
 
       it 'sends a message to be passed to slack method' do
         expect_any_instance_of(
-          NewRegistrarionService
+          NewRegistrationService
         ).to receive(:notify_slack).once
 
         registration_service

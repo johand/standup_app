@@ -4,6 +4,16 @@ require 'sidekiq/web'
 require 'sidekiq/cron/web'
 
 Rails.application.routes.draw do
+  resources :subscriptions, only: %i[create destroy]
+  resources :billing, only: [:index] do
+    collection do
+      get 'change_card'
+    end
+  end
+
+  resources :cards, only: [:create]
+  resources :plans, only: %i[index show]
+
   get 's/new/(:date)', to: 'standups#new', as: 'new_standup'
   get 's/edit/(:date)', to: 'standups#edit', as: 'edit_standup'
   resources :standups, path: 's', except: %i[new edit]
@@ -32,11 +42,15 @@ Rails.application.routes.draw do
         get 's/edit/(:date)', to: 'standups#edit', as: 'edit_standup'
       end
     end
+
+    resources :plans, only: [:index], controller: 'accounts/plans'
   end
 
   get 'activity/mine'
   get 'activity/feed'
   get 'dates/:date', to: 'dates#update', as: 'update_date'
   mount Sidekiq::Web, at: '/sidekiq'
+  mount StripeEvent::Engine, at: '/billing/events'
+
   root to: 'activity#mine'
 end

@@ -45,7 +45,7 @@ const Standups = props => {
 };
 
 const getActionCableConfig = () => {
-  let data = { date: null };
+  let data = null;
 
   const pathArray = window.location.pathname.split('/');
   switch (pathArray[1]) {

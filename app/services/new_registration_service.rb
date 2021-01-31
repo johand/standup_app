@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
-class NewRegistrarionService
+class NewRegistrationService
   Result = ImmutableStruct.new(:success?, :user, :account, :error)
 
   def initialize(params)
     @user = params[:user]
     @account = params[:account]
+    @plan = params[:plan]
   end
 
   def process_registration
     account_create
+    stripe_create
     send_welcome_email
     notify_slack
 
@@ -20,7 +22,17 @@ class NewRegistrarionService
 
   private
 
-  attr_reader :user, :account
+  attr_reader :user, :account, :plan
+
+  def stripe_create
+    return if @plan.nil?
+
+    Payments::Stripe::RemoteSignup.new(
+      account: account,
+      user: user,
+      plan: plan
+    ).process
+  end
 
   def account_create
     post_account_setup if account.save!

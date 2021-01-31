@@ -47,11 +47,14 @@ gem 'sidekiq'
 gem 'sidekiq-cron'
 gem 'sinatra', require: nil
 gem 'slack-notifier'
+gem 'stripe'
+gem 'stripe_event'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'capybara'
+  gem 'database_cleaner-active_record'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rails-controller-testing'
@@ -59,6 +62,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'simplecov', require: false, group: :test
   gem 'webdrivers', '~> 4.0'
+  gem 'webmock'
 end
 
 group :development do

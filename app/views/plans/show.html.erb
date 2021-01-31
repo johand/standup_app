@@ -1,0 +1,24 @@
+<script type="text/javascript">
+    window.constants = { stripePKey: "<%= Rails.configuration.stripe[:publishable_key] %>" }
+</script>
+
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Plans</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <%= react_component('StripeCard', { url_path: subscriptions_path,
+          csrf_token: form_authenticity_token, button_text: 'Add Card and Change Plan' }) %>
+      </div>
+    </div>
+  </div>
+</section>

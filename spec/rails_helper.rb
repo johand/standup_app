@@ -10,6 +10,7 @@ require 'rspec/rails'
 require 'devise'
 require 'support/controller_macros'
 require 'support/system_macros'
+require 'support/stripe_mocks'
 include Warden::Test::Helpers
 
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -45,8 +46,8 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
-
+  config.use_transactional_fixtures = false
+  # config.include FactoryBot::Syntax::Methods
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
 
@@ -73,6 +74,41 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :view
   config.extend ControllerMacros, type: :controller
   config.extend SystemMacros, type: :system
+  config.include StripeMocks
+
+  config.before(:suite) do
+    if config.use_transactional_fixtures?
+      raise(<<-MSG)
+        Delete line `config.use_transactional_fixtures = true` from rails_helper.rb
+        (or set it to false) to prevent uncommitted transactions being used in
+        JavaScript-dependent specs.
+        During testing, the app-under-test that the browser driver connects to
+        uses a different database connection to the database connection used by
+        the spec. The app's database connection would not be able to access
+        uncommitted transaction data setup over the spec's database connection.
+      MSG
+    end
+
+    DatabaseCleaner.clean_with(:truncation, pre_count: true, cache_tables: true)
+    # FactoryBot.lint
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, type: :system) do
+    driver_shares_db_connection_with_specs = Capybara.current_driver == :rack_test
+    DatabaseCleaner.strategy = :truncation unless driver_shares_db_connection_with_specs
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.append_after(:each) do
+    DatabaseCleaner.clean
+  end
 end
 
 Shoulda::Matchers.configure do |config|
@@ -80,11 +116,4 @@ Shoulda::Matchers.configure do |config|
     with.test_framework :rspec
     with.library :rails
   end
-end
-
-Capybara.register_driver :selenium_chrome_headless do |app|
-  options = Selenium::WebDriver::Chrome::Options.new(
-    args: %w[headless disable-gpu --window-size=1920x1080]
-  )
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end

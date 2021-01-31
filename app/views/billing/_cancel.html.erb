@@ -1,0 +1,7 @@
+<%= form_tag subscription_path(current_subscription.stripe_subscription_id), method: :delete do %>
+  <button class="btn btn-default"
+          type="submit" <%= 'disabled="disabled"' if !current_subscription.active? %>
+          data-confirm="Are you sure?">
+    <span>Cancel Subscription</span>
+  </button>
+<% end %>
