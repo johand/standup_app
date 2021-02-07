@@ -88,7 +88,7 @@
     </span>
   </div>
 
-  <div id="reminder-timer-box" class="form-group row" style="<%= f.object.has_reminder ? '' : 'display: none;' %>">
+  <div id="reminder-time-box" class="form-group row" style="<%= f.object.has_reminder ? '' : 'display: none;' %>">
     <%= f.label :reminder_time, class: 'control-label col-lg-2' %>
 
     <div class="col-lg-10">
@@ -116,7 +116,7 @@
   </div>
 
 
-  <div id="recap-timer-box" class="form-group row" style="<%= f.object.has_recap ? '' : 'display: none;' %>">
+  <div id="recap-time-box" class="form-group row" style="<%= f.object.has_recap ? '' : 'display: none;' %>">
     <%= f.label :recap_time, class: 'control-label col-lg-2' %>
 
     <div class="col-lg-10">
@@ -124,12 +124,14 @@
        { style: 'display: inline; width: 10%;', class: 'form-control' } %>
 
       <span class="help-block m-b-none">
-        Time of the day to send report recap in the selected time zone.
+        time of the day to send report recap in the selected time zone.
       </span>
     </div>
 
     <hr style=" width: 100%;" />
   </div>
+
+  <%= render partial: 'form_integrations', locals: { f: f } %>
 
   <div class="form-group">
     <div class="float-right">

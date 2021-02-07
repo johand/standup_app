@@ -5,6 +5,6 @@ class Account < ApplicationRecord
   has_many :users
   has_many :teams
   has_one :subscription
-
+  has_one :github, class_name: 'Integrations::Github'
   validates :name, presence: true
 end
