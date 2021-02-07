@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_09_235121) do
+ActiveRecord::Schema.define(version: 2021_02_05_230902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -36,6 +36,16 @@ ActiveRecord::Schema.define(version: 2021_01_09_235121) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_id"], name: "index_days_of_the_week_memberships_on_team_id"
+  end
+
+  create_table "integrations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "account_id", null: false
+    t.string "type"
+    t.jsonb "settings", default: {}, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_integrations_on_account_id"
+    t.index ["settings"], name: "index_integrations_on_settings", using: :gin
   end
 
   create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -118,9 +128,11 @@ ActiveRecord::Schema.define(version: 2021_01_09_235121) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "description"
+    t.jsonb "integration_settings", default: {}, null: false
     t.index ["account_id"], name: "index_teams_on_account_id"
     t.index ["has_recap", "recap_time"], name: "index_teams_on_has_recap_and_recap_time"
     t.index ["has_reminder", "reminder_time"], name: "index_teams_on_has_reminder_and_reminder_time"
+    t.index ["integration_settings"], name: "index_teams_on_integration_settings", using: :gin
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -142,6 +154,8 @@ ActiveRecord::Schema.define(version: 2021_01_09_235121) do
     t.string "invited_by_type"
     t.bigint "invited_by_id"
     t.integer "invitations_count", default: 0
+    t.string "provider"
+    t.string "uid"
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
@@ -160,6 +174,7 @@ ActiveRecord::Schema.define(version: 2021_01_09_235121) do
   end
 
   add_foreign_key "days_of_the_week_memberships", "teams"
+  add_foreign_key "integrations", "accounts"
   add_foreign_key "standups", "users"
   add_foreign_key "subscriptions", "accounts"
   add_foreign_key "task_memberships", "standups"
