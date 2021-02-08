@@ -59,5 +59,8 @@ Rails.application.routes.draw do
     end
   end
 
+  # Webhooks
+  post 'integrations/gitub/webhook/:team_id', to: 'events/github#create'
+
   root to: 'activity#mine'
 end

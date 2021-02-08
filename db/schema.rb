@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_05_230902) do
+ActiveRecord::Schema.define(version: 2021_02_08_011649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -36,6 +36,26 @@ ActiveRecord::Schema.define(version: 2021_02_05_230902) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_id"], name: "index_days_of_the_week_memberships_on_team_id"
+  end
+
+  create_table "events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "type"
+    t.uuid "team_id", null: false
+    t.string "user_name"
+    t.uuid "user_id", null: false
+    t.string "event_name"
+    t.text "event_body"
+    t.string "event_id"
+    t.jsonb "event_data", default: {}
+    t.datetime "event_time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["event_data"], name: "index_events_on_event_data", using: :gin
+    t.index ["event_id"], name: "index_events_on_event_id"
+    t.index ["team_id"], name: "index_events_on_team_id"
+    t.index ["type"], name: "index_events_on_type"
+    t.index ["user_id"], name: "index_events_on_user_id"
+    t.index ["user_name"], name: "index_events_on_user_name"
   end
 
   create_table "integrations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -156,6 +176,7 @@ ActiveRecord::Schema.define(version: 2021_02_05_230902) do
     t.integer "invitations_count", default: 0
     t.string "provider"
     t.string "uid"
+    t.string "github_username"
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
@@ -174,6 +195,8 @@ ActiveRecord::Schema.define(version: 2021_02_05_230902) do
   end
 
   add_foreign_key "days_of_the_week_memberships", "teams"
+  add_foreign_key "events", "teams"
+  add_foreign_key "events", "users"
   add_foreign_key "integrations", "accounts"
   add_foreign_key "standups", "users"
   add_foreign_key "subscriptions", "accounts"
