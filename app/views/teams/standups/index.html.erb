@@ -11,6 +11,8 @@
 <section class="content">
   <div class="container-fluid">
     <%= render partial: 'layouts/date_change', locals: { reload_path: "/t/#{@team.id}/s"} %>
+    <%= render partial: 'events',
+               locals: { events: @events, title: "Today's \"#{@team.name}\" Events"} %>
 
     <div class="row">
       <div class="col">

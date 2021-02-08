@@ -1,4 +1,7 @@
 <div class="container">
+  <span class="text-secondary text-center" style="font-size: 8px">
+    ##- Please type your reply above this line
+  </span>
   <h1 class="text-center mb-4">
     Standup App
   </h1>
@@ -11,6 +14,17 @@
 
       <p class="mb-4">
         Just wanted to remind you to add your standup for the team <%= @team.name %>
+      </p>
+
+      <p>
+        <span>Events from the last 24 hours:</span>
+        <% @events.each do |event| %>
+          <p>
+            <%= "#{event.event_name.humanize} '#{event.event_body}' by \
+                #{User.find_by(id: event_user_id)&.name || event.user_name}" %>
+            <%= ActiveSupport::TimeZone[@team.timezone].parse(event.event_time.to_s).strftime('%D %r') %>
+          </p>
+        <% end %>
       </p>
 
       <%= link_to 'Add Your Standup', new_standup_url(),

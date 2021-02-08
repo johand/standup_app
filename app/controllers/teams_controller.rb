@@ -2,6 +2,7 @@
 
 class TeamsController < ApplicationController
   include Limits
+  include TeamEvents
 
   load_and_authorize_resource except: [:create]
   around_action :use_time_zone, only: %i[edit show]
@@ -15,6 +16,7 @@ class TeamsController < ApplicationController
 
   def show
     set_teams_and_standups(Date.today.iso8601)
+    set_events
   end
 
   def new

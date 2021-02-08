@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="box-title"><%= title %></h5>
+      </div>
+
+      <div class="card-body">
+        <% if events.blank? %>
+          <p>No Events have been recorded</p>
+        <% else %>
+          <% events.each do |event| %>
+            <p>
+              <%= "#{event.event_name.humanize} '#{event.event_body}' by \
+                   #{User.find_by(id: event.user_id)&.name || event.user_name}" %>
+              <%= local_time_ago(event.event_time)  %>
+              - Repo:
+              <a
+                href="<%= event.event_data.dig('repo_url) %>"
+                target="_blank"
+                style="margin:0 5px"><%= event.event_data.dig('repo_name') %></a>
+            </p>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
