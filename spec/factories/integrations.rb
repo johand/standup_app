@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :integration do
-    account { nil }
+    account
     type { '' }
     settings { '' }
   end

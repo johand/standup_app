@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe Event, type: :model do
+RSpec.describe Events::Github, type: :model do
   it 'has a valid factory' do
-    expect(FactoryBot.build(:event)).to be_valid
+    expect(FactoryBot.build(:event, type: 'Events::Github')).to be_valid
   end
 
   it { is_expected.to belong_to(:user) }

@@ -3,9 +3,9 @@
 FactoryBot.define do
   factory :event do
     type { '' }
-    team { nil }
+    team
     user_name { 'MyString' }
-    user { nil }
+    user
     event_name { 'MyString' }
     event_body { 'MyText' }
     event_id { 'MyString' }
