@@ -11,6 +11,7 @@ require 'devise'
 require 'support/controller_macros'
 require 'support/system_macros'
 require 'support/stripe_mocks'
+require 'support/github_mocks'
 include Warden::Test::Helpers
 
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -75,6 +76,7 @@ RSpec.configure do |config|
   config.extend ControllerMacros, type: :controller
   config.extend SystemMacros, type: :system
   config.include StripeMocks
+  config.include GithubMocks
 
   config.before(:suite) do
     if config.use_transactional_fixtures?

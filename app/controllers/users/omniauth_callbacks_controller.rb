@@ -3,7 +3,7 @@
 module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     skip_before_action :verify_authenticity_token, only: :github
-    before_action :github_user
+    before_action :github_user, except: :github
 
     def github
       @auth = request.env['omniauth.auth']

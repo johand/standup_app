@@ -90,7 +90,7 @@ class TeamsController < ApplicationController
     return unless @github
 
     client = Github.new oauth_token: @github.settings['token']
-    @grepos = client.repost.list.body.map do |r|
+    @grepos = client.repos.list.body.map do |r|
       RepoInfo.new(name: r.name, owner: r.owner.login)
     end
   end
