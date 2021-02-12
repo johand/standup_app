@@ -16,7 +16,7 @@
               <%= local_time_ago(event.event_time)  %>
               - Repo:
               <a
-                href="<%= event.event_data.dig('repo_url) %>"
+                href="<%= event.event_data.dig('repo_url') %>"
                 target="_blank"
                 style="margin:0 5px"><%= event.event_data.dig('repo_name') %></a>
             </p>

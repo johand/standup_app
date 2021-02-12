@@ -22,18 +22,18 @@ module Webhooks
 
       attr_reader :team
 
-      def check_webooks_to_remove
+      def check_webhooks_to_remove
         repos = (
-          team.integration_settings_change[0]&.dig('github_repos') || []
+          team.integration_settings_change[0]&.dig('github_repos') || [] -
           team.integration_settings_change[1]&.dig('github_repos') || []
         ) || []
 
         remove_webhook(repos)
       end
 
-      def check_webooks_to_add
+      def check_webhooks_to_add
         repos = (
-          team.integration_settings_change[1]&.dig('github_repos') || []
+          team.integration_settings_change[1]&.dig('github_repos') || [] -
           team.integration_settings_change[0]&.dig('github_repos') || []
         ) || []
 

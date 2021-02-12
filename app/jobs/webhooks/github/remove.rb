@@ -2,7 +2,7 @@
 
 module Webhooks
   module Github
-    class Remove
+    class Remove < ActiveJob::Base
       queue_as :default
 
       rescue_from('Github::Error::UnprocessableEntity') {}
