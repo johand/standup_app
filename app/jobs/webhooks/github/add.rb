@@ -32,9 +32,9 @@ module Webhooks
         {
           name: 'web',
           config: {
-            url: "#{domain}/integrations/github/webhook/#{team.hash_id}",
+            url: "#{domain}/integrations/github/webhook/#{team.id}",
             content_type: 'json',
-            secret: team.hash_id
+            secret: team.id
           },
           active: true,
           events: %w[push pull_request]

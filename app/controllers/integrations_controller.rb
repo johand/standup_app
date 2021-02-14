@@ -10,9 +10,8 @@ class IntegrationsController < ApplicationController
 
   def destroy
     if delete_integration
-      redirect("Removed #{params[:provider].capitalize} integration.\
-       Please be sure to remove the application\
-       through your settings area in #{params[:provider].capitalize}")
+      redirect("Removed #{params[:provider].capitalize} integration. Please be\
+ sure to remove the application through your settings area in #{params[:provider].capitalize}")
     else
       redirect("Unable to removed #{params[:provider].capitalize} integration")
     end

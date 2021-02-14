@@ -40,8 +40,7 @@ RSpec.describe IntegrationsController, type: :controller do
     it 'returns HTTP success' do
       delete :destroy, params: { provider: 'github' }
       expect(response).to have_http_status(:redirect)
-      expect(flash[:notice]).to eq 'Removed Github integration. Please be sure to rem\
-ove the application through your settings area in Github'
+      expect(flash[:notice]).to eq 'Removed Github integration. Please be sure to remove the application through your settings area in Github'
     end
 
     it 'does not delete integration' do

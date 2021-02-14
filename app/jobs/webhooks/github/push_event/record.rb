@@ -39,7 +39,7 @@ module Webhooks
             commit_url: commit['url'],
             branch: json['ref'].split('/')[-1],
             repo_name: json['repository']['name'],
-            repo_url: jon['repository']['html_url'],
+            repo_url: json['repository']['html_url'],
             changed: {
               added: commit['added'],
               removed: commit['removed'],
