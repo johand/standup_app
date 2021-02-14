@@ -6,6 +6,7 @@ RSpec.describe TeamsController, type: :controller do
   login_admin
 
   let(:account) { @admin.account }
+  let(:team) { FactoryBot.create(:team) }
   let(:valid_attributes) do
     {
       name: Faker::Team.name,
@@ -44,15 +45,38 @@ RSpec.describe TeamsController, type: :controller do
   describe 'GET #new' do
     it 'assigns a new team as @team' do
       get :new, params: {}
+      FactoryBot.create(
+        :integration,
+        type: 'Integrations::Github',
+        account_id: @admin.account.id,
+        settings: { token: '<<your token>>' }
+      )
+
+      github_mock_repo_list
+      get :new, params: {}
+      expect(response).to have_http_status(:success)
       expect(assigns(:team)).to be_a_new(Team)
+      expect(assigns(:github)).to be_truthy
+      expect(assigns(:grepos)).to be_truthy
     end
   end
 
   describe 'GET #edit' do
     it 'assigns the requested team as @team' do
       team = FactoryBot.create(:team, account_id: account.id)
+      FactoryBot.create(
+        :integration,
+        type: 'Integrations::Github',
+        account_id: @admin.account.id,
+        settings: { token: '<<your token>>' }
+      )
+
+      github_mock_repo_list
       get :edit, params: { id: team.to_param }
+      expect(response).to have_http_status(:success)
       expect(assigns(:team)).to eq(team)
+      expect(assigns(:github)).to be_truthy
+      expect(assigns(:grepos)).to be_truthy
     end
   end
 

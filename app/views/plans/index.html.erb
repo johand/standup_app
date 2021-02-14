@@ -25,7 +25,7 @@
             <div class="card-body">
               <% disabled = plan.stripe_id == current_subscription.plan_id %>
 
-              <a class="btn btn-primary btn-block <%= disabled ? 'btn-default disabed' : 'btn-primary' %>"
+              <a class="btn btn-primary btn-block <%= disabled ? 'btn-default disabled' : 'btn-primary' %>"
                  href="<%= plan_path(plan.stripe_id) %>" style="margin: 10px 0px">
                 <h4><%= disabled ? 'Current Plan' : 'Selected Plan' %></h4>
               </a>

@@ -18,7 +18,8 @@ Rails.application.routes.draw do
   get 's/edit/(:date)', to: 'standups#edit', as: 'edit_standup'
   resources :standups, path: 's', except: %i[new edit]
 
-  devise_for :users, controllers: { registrations: 'registrations' }
+  devise_for :users, controllers: { registrations: 'registrations',
+                                    omniauth_callbacks: 'users/omniauth_callbacks' }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resource :accounts
 
@@ -51,6 +52,15 @@ Rails.application.routes.draw do
   get 'dates/:date', to: 'dates#update', as: 'update_date'
   mount Sidekiq::Web, at: '/sidekiq'
   mount StripeEvent::Engine, at: '/billing/events'
+
+  resources :integrations, only: [:index] do
+    collection do
+      delete ':provider', action: 'destroy', as: 'remove'
+    end
+  end
+
+  # Webhooks
+  post 'integrations/gitub/webhook/:team_id', to: 'events/github#create'
 
   root to: 'activity#mine'
 end
