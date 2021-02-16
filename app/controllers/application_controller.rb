@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::Base
   include StandupsHelper
+  after_action :send_to_analytics
   before_action :authenticate_user!
   before_action :subscription_check
   layout :layout_by_resource
@@ -70,6 +71,17 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def send_to_analytics
+    return if devise_controller? || controller_name.in?(%w[github webhook])
+
+    Analytics::Mixpanel::SendEventJob.perform_later(
+      current_user,
+      'Page View',
+      controller: controller_name,
+      action: action_name
+    )
+  end
 
   def subscription_check
     return if layout_by_resource == 'devise' ||
