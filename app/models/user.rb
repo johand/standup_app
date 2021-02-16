@@ -21,4 +21,8 @@ class User < ApplicationRecord
       user.name = auth.info.name
     end
   end
+
+  def after_database_authentication
+    Analytics::Mixpanel::IdentifyPersonJob.perform_later(self)
+  end
 end
