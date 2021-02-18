@@ -3,12 +3,13 @@
 module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     skip_before_action :verify_authenticity_token, only: :github
-    before_action :github_user, except: :github
 
     def github
       @auth = request.env['omniauth.auth']
 
-      if successful_integration_creation
+      if current_user.nil?
+        github_user
+      elsif successful_integration_creation
         redirect_to(
           integrations_path,
           notice: 'Github integration has been added'
@@ -28,7 +29,7 @@ module Users
 
       if @user.persisted?
         sign_in @user, event: :authentication # this will throw if @user is not activated
-        redirect_to new_accounts_path(plan: 'starter')
+        redirect_to new_accounts_path
         set_flash_message(:notice, :success, kind: 'Github') if is_navigational_format?
       else
         # Removing extra as it can overflow some session stores

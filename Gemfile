@@ -45,6 +45,7 @@ gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
 gem 'pry-rails'
 gem 'rack-cors', require: 'rack/cors'
+gem 'rack-mini-profiler'
 gem 'react-rails'
 gem 'rolify'
 gem 'sidekiq'
@@ -56,6 +57,7 @@ gem 'stripe_event'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'bullet'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'capybara'
   gem 'database_cleaner-active_record'
@@ -72,6 +74,7 @@ end
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'listen', '~> 3.2'
+  gem 'lol_dba'
   gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'foreman'

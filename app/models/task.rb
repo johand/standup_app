@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
+  after_commit { standups.find_each(&:touch) }
+
   validates_presence_of :title
   validates_presence_of :type
 

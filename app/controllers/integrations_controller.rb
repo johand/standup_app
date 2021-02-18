@@ -28,7 +28,12 @@ class IntegrationsController < ApplicationController
 
   def fetch_remote_repos
     client = Github.new oauth_token: @github.settings['token']
-    @grepos = client.repos.list.body.map(&:name)
+    @grepos = Rails.cache.fetch(
+      "github.integration.repos.#{current_account.id}",
+      expires_in: 15.minutes
+    ) do
+      client.repos.list.body.map(&:name)
+    end
   end
 
   def delete_integration

@@ -90,8 +90,13 @@ class TeamsController < ApplicationController
     return unless @github
 
     client = Github.new oauth_token: @github.settings['token']
-    @grepos = client.repos.list.body.map do |r|
-      RepoInfo.new(name: r.name, owner: r.owner.login)
+    @grepos = Rails.cache.fetch(
+      "github.teams.repos.#{current_account.id}",
+      expires_in: 15.minutes
+    ) do
+      client.repos.list.body.map do |r|
+        RepoInfo.new(name: r.name, owner: r.owner.login)
+      end
     end
   end
 
