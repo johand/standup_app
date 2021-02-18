@@ -27,7 +27,7 @@ Rails.application.configure do
   else
     config.action_controller.perform_caching = false
 
-    config.cache_store = :null_store
+    config.cache_store = :redis_cache_store, { namespace: 'cache' }
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
@@ -83,4 +83,10 @@ Rails.application.configure do
   # config.action_mailer.default_url_options = {
   #   host: "http://localhost:#{ENV['PORT'] || 3000}"
   # }
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+    Bullet.rails_logger = true
+  end
 end

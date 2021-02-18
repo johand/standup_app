@@ -1,0 +1,13 @@
+ALTER TABLE "users" ADD "invitation_token" character varying;
+ALTER TABLE "users" ADD "invitation_created_at" timestamp;
+ALTER TABLE "users" ADD "invitation_sent_at" timestamp;
+ALTER TABLE "users" ADD "invitation_accepted_at" timestamp;
+ALTER TABLE "users" ADD "invitation_limit" integer;
+ALTER TABLE "users" ADD "invited_by_type" character varying;
+ALTER TABLE "users" ADD "invited_by_id" bigint;
+CREATE  INDEX  "index_users_on_invited_by_type_and_invited_by_id" ON "users"  ("invited_by_type", "invited_by_id");
+ALTER TABLE "users" ADD "invitations_count" integer DEFAULT 0;
+CREATE  INDEX  "index_users_on_invitations_count" ON "users"  ("invitations_count");
+CREATE UNIQUE INDEX  "index_users_on_invitation_token" ON "users"  ("invitation_token");
+CREATE  INDEX  "index_users_on_invited_by_id" ON "users"  ("invited_by_id");
+INSERT INTO schema_migrations (version) VALUES (20200913042754);

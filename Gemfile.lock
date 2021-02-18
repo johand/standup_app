@@ -85,6 +85,9 @@ GEM
       premailer-rails (~> 1.9)
       rails (>= 3)
     builder (3.2.4)
+    bullet (6.1.3)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     byebug (11.0.1)
     cancancan (3.0.1)
     capybara (3.35.3)
@@ -166,6 +169,10 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     local_time (2.1.0)
+    lol_dba (2.2.0)
+      actionpack (>= 3.0, < 7.0)
+      activerecord (>= 3.0, < 7.0)
+      railties (>= 3.0, < 7.0)
     loofah (2.9.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -239,6 +246,8 @@ GEM
     racc (1.5.2)
     rack (2.2.3)
     rack-cors (1.0.3)
+    rack-mini-profiler (2.3.1)
+      rack (>= 1.2.0)
     rack-protection (2.0.5)
       rack
     rack-proxy (0.6.5)
@@ -384,6 +393,7 @@ GEM
     tzinfo (1.2.9)
       thread_safe (~> 0.1)
     unicode-display_width (2.0.0)
+    uniform_notifier (1.13.2)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.0.0)
@@ -416,6 +426,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.4.2)
   bootstrap-email
+  bullet
   byebug
   cancancan
   capybara
@@ -434,6 +445,7 @@ DEPENDENCIES
   letter_opener
   listen (~> 3.2)
   local_time
+  lol_dba
   mixpanel-ruby
   money-rails
   omniauth-github
@@ -442,6 +454,7 @@ DEPENDENCIES
   pry-rails
   puma (~> 4.1)
   rack-cors
+  rack-mini-profiler
   rails (~> 6.0.3, >= 6.0.3.2)
   rails-controller-testing
   react-rails
